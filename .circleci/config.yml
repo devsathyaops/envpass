@@ -1,42 +1,25 @@
 version: 2.1
+
 jobs:
   build:
-    working_directory: ~/envpass
-
+    working_directory: ~/circleci-python
     docker:
-      # specify the version you desire here
-      - image: circleci/node
-     
-
+      - image: "circleci/python:3.6.4"
     steps:
       - checkout
+      - run: python3 test.py
+  test:
+    working_directory: ~/envpass
+    docker:
+      - image: "circleci/python:3.6.4"
+    steps:
+      - checkout
+      - run: python3 test.py
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - dependencies-cache-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - dependencies-cache
-
-      - run:
-          name: Install Serverless CLI and dependencies
-          command: |
-            sudo npm i -g serverless
-            npm install
-            
-      # run tests
-      - run: 
-          name: Run tests with code coverage
-          command: npm test --coverage
-                   echo ${Name}
-                  
-
-      # deploy app            
-      - run:
-          name: Deploy application 
-          command: sls deploy  
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: dependencies-cache-{{ checksum "package.json" }}
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
