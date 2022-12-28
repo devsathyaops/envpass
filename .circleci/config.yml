@@ -2,10 +2,15 @@ version: 2.1
 jobs:
   build:
     docker: 
-      - image: circleci/node
-      
+      - image: circleci/node 
     steps:
       - checkout
+  
+      - restore_cache:
+          keys:
+            - dependencies-cache-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - dependencies-cache
        
       - run:
           name: Install Serverless CLI and dependencies
