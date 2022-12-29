@@ -6,10 +6,10 @@ jobs:
     docker:
       - image: "circleci/python:3.6.4"
     steps:
-      - checkout
+      - checkout 
       - run: sudo pip install boto3
-             echo ${BUCKET_NAME}
       - run: python3 test.py
+             echo $BUCKET_NAME
 
 workflows:
   build:
