@@ -4,7 +4,6 @@ import boto3
 s3 = boto3.client('s3')
 
 def lambda_handler(event, context):
-	bucket ='upload-objects-from-lambda'
 
 	transactionToUpload = {}
 	transactionToUpload['transactionId'] = '3456789'
@@ -16,7 +15,7 @@ def lambda_handler(event, context):
 
 	uploadByteStream = bytes(json.dumps(transactionToUpload).encode('UTF-8'))
 
-	s3.put_object(Bucket=bucket, Key=fileName, Body=uploadByteStream)
+	s3.put_object(Bucket=BUCKET_NAME,Body=uploadByteStream)
 
 	print('Put Complete')
 
