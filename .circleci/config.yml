@@ -8,10 +8,12 @@ jobs:
     steps:
       - checkout 
       - run: sudo pip install boto3
+      - run:
+          command: echo $BUCKET_NAME
       - run: python3 test.py
-             echo $BUCKET_NAME
 
 workflows:
   build:
     jobs:
       - build
+      
