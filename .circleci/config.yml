@@ -7,7 +7,7 @@ jobs:
       - image: "circleci/python:3.6.4"
     steps:
       - checkout
-      - run: pip install boto3
+      - run: sudo pip install boto3
       - run: python3 test.py
 
 workflows:
